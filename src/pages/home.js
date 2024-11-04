@@ -67,24 +67,24 @@ function Home() {
 
       <div className='pt-10 px-10'>
         <div className="bg-blue-900 text-black rounded-3xl p-8 mb-8">
-          <div className="flex flex-row  bg-white rounded-2xl font-nunito p-3 justify-between items-center mb-8">
+          <div className="flex flex-col md:flex-row text-center bg-white rounded-2xl font-nunito p-3 justify-between items-center mb-8">
             <h1 className="text-2xl font-bold mb-4 md:mb-0">Welcome to MySivi</h1>
-            <button className="bg-white text-blue-900 text-xl rounded-full px-4 py-2">
+            <button className="text-blue-900 text-xl rounded-full px-4 py-2">
               Select Mode
             </button>
           </div>
-          <div className="flex items-center justify-center pt-7 pb-7 flex-row font-nunito space-x-40 md:space-y-0 md:space-x-4">
+          <div className="flex items-center justify-center text-center pt-7 pb-7 flex-col md:flex-row font-nunito space-y-10 md:space-y-0 md:space-x-4">
             <Type  heading="Talk with a Person" description="AI Bot As Moderator" link="/channel" img="/person.png" w="200" h="150"/>
             <Type heading="Talk with AI Bot" description="AI bot will roleplay and talk with you." link="" img="/robot.jpg" w="200" h="150"/>
           </div>
         </div>
       </div>
-      <div className='px-10 flex flex-row gap-4 items-center justify-center'>
-        <section className="bg-yellow-500 p-4 rounded-3xl shadow w-[720px] h-[400px]">
+      <div className='px-10 flex flex-col md:flex-row gap-4 items-center justify-center'>
+        <section className="bg-yellow-500 p-4 rounded-3xl">
           <h2 className="font-bold text-3xl mb-2">Active Users</h2>
           <div className="items-start gap-4">
-            {sortedUsers.map((user) => (
-              <div key={user._id} className="flex flex-col items-center">
+            {sortedUsers.slice(4).map((user) => (
+              <div key={user._id} className="flex flex-col items-start">
                 <button
                   onClick={() => { handleUserClick(user) }}
                   className="flex flex-col items-center focus:outline-none"
@@ -112,7 +112,7 @@ function Home() {
             ))}
           </div>
         </section>  
-        <section className="bg-yellow-500 text-black rounded-xl p-4 font-nunito flex flex-row items-center w-[720px] h-[400px] justify-center">
+        <section className="bg-yellow-500 text-black rounded-xl p-4 font-nunito flex flex-row items-center w-[600px] h-[400px] justify-center">
           <div className="flex flex-col items-start max-w-80">
             <h2 className="text-4xl font-bold mb-4">Your Friends</h2>
             <p className="text-5xl">You have No friends yet</p>

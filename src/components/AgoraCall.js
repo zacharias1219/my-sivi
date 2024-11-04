@@ -31,7 +31,7 @@ function Call(props) {
           </main>
           <div className="flex justify-center p-10">
             <nav className="bg-white rounded-xl shadow-2xl py-6 p-4 w-96">
-              <ul className="flex justify-center gap-12">
+              <ul className="flex md:flex-row flex-col justify-center gap-12">
               <li className="flex">
                   <MuteButton /> 
                 </li>
@@ -121,8 +121,8 @@ function Audio(props) {
     <div className="space-y-4 bg-white p-4 rounded-lg shadow">
 
       <section className="pb-10 pt-6">
-        <ul className="space-y-2 flex flex-row gap-20 justify-center">
-          <li className="flex items-center bg-gray-400 rounded-2xl">
+        <ul className="space-y-2 flex flex-col items-center md:flex-row gap-20 justify-center">
+          <li className="flex items-center text-center rounded-2xl">
             <div className="w-40 h-40 bg-blue-500 rounded-full mr-2">
             {currentUser.profilePicture ? (
         <img
