@@ -8,7 +8,7 @@ async function generateResponse(transcription) {
   try {
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: `Respond conversationally to: "${transcription}"` }],
+      messages: [{ role: "user", content: `Respond to the inputs with interesting questions: "${transcription}"` }],
       max_tokens: 50,
     });
     console.log("OpenAI response:", response.choices[0].message.content.trim());

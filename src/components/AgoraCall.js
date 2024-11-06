@@ -118,7 +118,7 @@ function Audio(props) {
   };
 
   return (
-    <div className="space-y-4 bg-white p-4 rounded-lg shadow">
+    <div className="space-y-4 bg-white p-16 rounded-lg shadow">
 
       <section className="pb-10 pt-6">
         <ul className="space-y-2 flex flex-col items-center md:flex-row gap-20 justify-center">
@@ -131,7 +131,7 @@ function Audio(props) {
           className="w-full h-full object-cover"
         />
       ) : (
-        <p className="p-6">No profile picture available</p>
+        <p className="p-10">No profile picture available</p>
       )}
             </div>
             <span className="text-xl font-bold">You</span>
