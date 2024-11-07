@@ -27,11 +27,11 @@ function Home() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch('/api/getallusers')
+        console.log("Starting to fetch users..."); // Log start of fetch
+        const response = await fetch('/api/getallusers');
         if (response.ok) {
-          const usersResponse = await response.json()
-          setUsers(usersResponse)
-          // console.log('Fetched users:', users[0]._id)
+          const usersResponse = await response.json();
+          console.log("Fetched users successfully:", usersResponse); // Log fetched data
         } else {
           console.log('Failed to fetch users')
         }
@@ -39,20 +39,29 @@ function Home() {
       catch (err) {
         console.log('Failed to fetch users', err)
       }
-    }
-    fetchUsers()
-    const token = localStorage.getItem('token')
+    };
+
+    fetchUsers();
+
+    // Check for token in localStorage
+    const token = localStorage.getItem('token');
+    console.log("Token retrieved from localStorage:", token); // Log token if it exists
+
     if (token) {
       try {
-        const decodedToken = jwtDecode(token)
+        const decodedToken = jwtDecode(token);
+        console.log("Decoded token:", decodedToken); // Log the decoded token
         if (decodedToken && decodedToken.email) {
-          setCurrentUser(decodedToken)
+          setCurrentUser(decodedToken);
+          console.log("Current user set:", decodedToken); // Log updated currentUser state
+        } else {
+          console.log("Decoded token does not contain an email");
         }
       } catch (error) {
-        console.error('Error decoding token:', error)
+        console.error("Error decoding token:", error);
       }
     }
-  }, [setUsers, setCurrentUser])
+  }, [setUsers, setCurrentUser]);
 
   const sortedUsers = [...users].sort((a, b) => {
     if (a.email === currentUser) return -1;
