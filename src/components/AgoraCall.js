@@ -32,7 +32,7 @@ function Call(props) {
           <div className="flex justify-center p-10">
             <nav className="bg-white rounded-xl shadow-2xl py-6 p-4 w-96">
               <ul className="flex md:flex-row flex-col justify-center gap-12">
-              <li className="flex">
+                <li className="flex">
                   <MuteButton /> 
                 </li>
                 <li className="flex">
@@ -42,7 +42,7 @@ function Call(props) {
                 </li>
               </ul>
             </nav>
-            </div>
+          </div>
         </div>
       </AgoraRTCProvider>
     ) : null
@@ -119,22 +119,23 @@ function Audio(props) {
 
   return (
     <div className="space-y-4 bg-white p-16 rounded-lg shadow">
-
       <section className="pb-10 pt-6">
         <ul className="space-y-2 flex flex-col items-center md:flex-row gap-20 justify-center">
           <li className="flex items-center text-center rounded-2xl">
             <div className="w-40 h-40 bg-blue-500 rounded-full mr-2">
-            {currentUser.profilePicture ? (
-        <img
-          src={currentUser.profilePicture}
-          alt={currentUser.username}
-          className="w-full h-full object-cover"
-        />
-      ) : (
-        <p className="p-10">No profile picture available</p>
-      )}
+              {currentUser?.profilePicture ? (
+                <img
+                  src={currentUser.profilePicture}
+                  alt={currentUser.username || currentUser.email || 'User'}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <p className="p-10">No profile picture available</p>
+              )}
             </div>
-            <span className="text-xl font-bold">You</span>
+            <span className="text-xl font-bold">
+              {currentUser?.username || currentUser?.email || 'You'}
+            </span>
           </li>
           {
             allParticipants.map((user) => {
@@ -142,17 +143,15 @@ function Audio(props) {
               return (
                 <li key={user.uid} className="flex items-center">
                   <div className="w-8 h-8 bg-green-500 rounded-full mr-2">
-                    {
-                      userDetail.profilePicture ? (
-                        <img src={userDetail.profilePicture} alt={userDetail.username} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-500">
-                          {userDetail.username && userDetail.username.charAt(0).toUpperCase()} Not found
-                        </div>
-                      )
-                    }
+                    {userDetail.profilePicture ? (
+                      <img src={userDetail.profilePicture} alt={userDetail.username || 'User'} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-gray-500">
+                        {(userDetail.username || 'U').charAt(0).toUpperCase()} Not found
+                      </div>
+                    )}
                   </div>
-                  <span>{userDetail.username}</span>
+                  <span>{userDetail.username || userDetail.email || 'User'}</span>
                 </li>
               );
             })
@@ -161,19 +160,18 @@ function Audio(props) {
       </section>
       <div className="flex flex-col justify-center items-center gap-y-5">
         <section className="bg-blue-900 p-4 rounded-2xl shadow">
-        <div className="rounded-3xl bg-pri-base flex flex-row items-center justify-center p-4 text-17xl text-background">
+          <div className="rounded-3xl bg-pri-base flex flex-row items-center justify-center p-4 text-17xl text-background">
             <b className="w-[320px] text-white text-2xl relative inline-block shrink-0">
               {question}
             </b>
           </div>
         </section>
         <section className="bg-blue-300 hover:bg-blue-400 w-50 px-4 rounded-2xl">
-        <div onClick={generateQuestion} className="rounded-2xl bg-pri-10 flex flex-row items-center justify-center py-2 px-[17px] gap-2.5 text-lgi text-pri-90 hover:bg-pri-50 font-product-sans-medium">
+          <div onClick={generateQuestion} className="rounded-2xl bg-pri-10 flex flex-row items-center justify-center py-2 px-[17px] gap-2.5 text-lgi text-pri-90 hover:bg-pri-50 font-product-sans-medium">
             <div className="relative text-blue-600">Generate question</div>
-            
           </div>
         </section>
-        </div>
+      </div>
     </div>
   );
 }
@@ -192,7 +190,6 @@ function MuteButton() {
   const [micMuted, setMicMuted] = useState(false);
   const { localMicrophoneTrack } = useLocalMicrophoneTrack();
 
-  // Function to toggle mic and start/stop recording
   const toggleMic = () => {
     const newMutedState = !micMuted;
     if (newMutedState) {
@@ -204,7 +201,6 @@ function MuteButton() {
     localMicrophoneTrack.setMuted(newMutedState);
   };
 
-  // Function to handle the full TTS process
   const handleSpeechResponse = async () => {
     if (transcript.text) {
       const response = await generateResponse(transcript.text);
@@ -237,6 +233,5 @@ function MuteButton() {
     </div>
   );
 }
-
 
 export default Call;

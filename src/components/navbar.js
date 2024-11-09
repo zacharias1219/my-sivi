@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { jwtDecode } from "jwt-decode";
+import jwtDecode from "jwt-decode";
+import { useUsers } from '@/context/UsersContext';
+
 export default function Navbar() {
+  const { currentUser, setCurrentUser } = useUsers();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [profilePicture, setProfilePicture] = useState('');
-  const [username, setUsername] = useState('User');
   const router = useRouter();
 
   useEffect(() => {
@@ -13,14 +14,13 @@ export default function Navbar() {
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        setProfilePicture(decodedToken.profilePicture || '');
-        setUsername(decodedToken.username || 'User');
-
+        console.log("Decoded token structure in Navbar:", decodedToken); // Inspect the structure closely here
+        setCurrentUser(decodedToken); // Set currentUser to decodedToken
       } catch (error) {
         console.error('Error decoding token:', error);
       }
     }
-  }, []);
+  }, [setCurrentUser]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -30,33 +30,22 @@ export default function Navbar() {
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
       <div className="container mx-auto py-4 flex justify-between items-center">
-        {/* Logo */}
         <div className="text-3xl font-bold text-gray-800">
-          <Link href="/home">
-            Mysivi
-          </Link>
+          <Link href="/home">Mysivi</Link>
         </div>
 
-        
-
-        {/* Profile Dropdown */}
         <div className="relative">
-          <button
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center space-x-2"
-          >
-            {profilePicture ? (
-              <img
-                src={profilePicture}
-                alt="User"
-                className="w-10 h-10 rounded-full object-cover"
-              />
+          <button onClick={() => setDropdownOpen(!dropdownOpen)} className="flex items-center space-x-2">
+            {/* Debugging profilePicture and username extraction */}
+            {currentUser?.profilePicture ? (
+              <img src={currentUser.profilePicture} alt="User" className="w-10 h-10 rounded-full object-cover" />
             ) : (
               <span className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center">
-                {username.charAt(0).toUpperCase()}
+                {/* Use email as fallback if username is missing */}
+                {currentUser?.username?.charAt(0).toUpperCase() || currentUser?.email?.charAt(0).toUpperCase() || 'U'}
               </span>
             )}
-            <span className="text-gray-800">{username}</span>
+            <span className="text-gray-800">{currentUser?.username || currentUser?.email || 'User'}</span>
           </button>
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
@@ -76,11 +65,6 @@ export default function Navbar() {
           )}
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      <nav className="md:hidden bg-white border-t border-gray-200">
-        
-      </nav>
     </header>
   );
 }
