@@ -120,38 +120,38 @@ function Audio(props) {
   return (
     <div className="space-y-4 bg-white p-16 rounded-lg shadow">
       <section className="pb-10 pt-6">
-        <ul className="space-y-2 flex flex-col items-center md:flex-row gap-20 justify-center">
-          <li className="flex items-center text-center rounded-2xl">
+        <ul className="space-y-3 flex flex-col items-center md:flex-row gap-20 justify-center">
+          <li className="flex flex-col pt-2 gap-4 items-center text-center rounded-2xl">
             <div className="w-40 h-40 bg-blue-500 rounded-full mr-2">
               {currentUser?.profilePicture ? (
                 <img
                   src={currentUser.profilePicture}
                   alt={currentUser.username || currentUser.email || 'User'}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover rounded-full"
                 />
               ) : (
                 <p className="p-10">No profile picture available</p>
               )}
             </div>
             <span className="text-xl font-bold">
-              {currentUser?.username || currentUser?.email || 'You'}
+              YOU
             </span>
           </li>
           {
             allParticipants.map((user) => {
               const userDetail = users.find((u) => u._id === user.uid) || user;
               return (
-                <li key={user.uid} className="flex items-center">
-                  <div className="w-8 h-8 bg-green-500 rounded-full mr-2">
+                <li key={user.uid} className="flex flex-col gap-4 items-center">
+                  <div className="w-40 h-40 bg-green-500 rounded-full mr-2">
                     {userDetail.profilePicture ? (
-                      <img src={userDetail.profilePicture} alt={userDetail.username || 'User'} className="w-full h-full object-cover" />
+                      <img src={userDetail.profilePicture} alt={userDetail.username || 'User'} className="w-full h-full rounded-full object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-gray-500">
                         {(userDetail.username || 'U').charAt(0).toUpperCase()} Not found
                       </div>
                     )}
                   </div>
-                  <span>{userDetail.username || userDetail.email || 'User'}</span>
+                  <span className="text-xl font-bold">{(userDetail.username || userDetail.email || 'User').toUpperCase()}</span>
                 </li>
               );
             })
@@ -189,6 +189,7 @@ function MuteButton() {
   
   const [micMuted, setMicMuted] = useState(false);
   const { localMicrophoneTrack } = useLocalMicrophoneTrack();
+  usePublish([localMicrophoneTrack]);
 
   const toggleMic = () => {
     const newMutedState = !micMuted;
