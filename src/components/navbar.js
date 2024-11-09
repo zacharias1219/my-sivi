@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { useUsers } from '@/context/UsersContext';
 
 export default function Navbar() {
