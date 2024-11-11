@@ -217,7 +217,7 @@ function MuteButton() {
 
   return (
     <div>
-      <h1>{transcript.text || '[Transcription will go here]'}</h1>
+      {/* <h1>{transcript.text || '[Transcription will go here]'}</h1> */}
       <button
         onClick={toggleMic}
         className={`px-5 py-3 text-base font-medium text-center rounded-lg w-36 
@@ -225,12 +225,12 @@ function MuteButton() {
       >
         {micMuted ? "Mute" : "Unmute"}
       </button>
-      <button
+      {/* <button
         className="bg-blue-400 rounded-md p-1 mt-3"
         onClick={handleSpeechResponse}
       >
         Text to Speech
-      </button>
+      </button> */}
     </div>
   );
 }
