@@ -1,4 +1,4 @@
-import { useRemoteUsers } from "agora-rtc-react";
+// import { useRemoteUsers } from "agora-rtc-react";
 
 // Function to add moderator bot to the participant list
 export function getAllParticipants(remoteUsers) {
@@ -26,23 +26,23 @@ export async function addModeratorBot(client, channelName, AppID) {
 }
 
 
-export async function transcribeAudio(audioData) {
-  try {
-    const response = await axios.post('/api/transcribe', { audio: audioData });
-    return response.data.transcription;
-  } catch (error) {
-    console.error('Transcription error:', error);
-    return null;
-  }
-}
+// export async function transcribeAudio(audioData) {
+//   try {
+//     const response = await axios.post('/api/transcribe', { audio: audioData });
+//     return response.data.transcription;
+//   } catch (error) {
+//     console.error('Transcription error:', error);
+//     return null;
+//   }
+// }
 
-export function handleTranscription(transcription) {
-  console.log('Transcription:', transcription);
-  if (transcription.includes('mute')) {
-    // Mute logic
-    console.log('Mute logic triggered');
-  } else if (transcription.includes('unmute')) {
-    // Unmute logic
-    console.log('Unmute logic triggered');
-  }
-}
+// export function handleTranscription(transcription) {
+//   console.log('Transcription:', transcription);
+//   if (transcription.includes('mute')) {
+//     // Mute logic
+//     console.log('Mute logic triggered');
+//   } else if (transcription.includes('unmute')) {
+//     // Unmute logic
+//     console.log('Unmute logic triggered');
+//   }
+// }
